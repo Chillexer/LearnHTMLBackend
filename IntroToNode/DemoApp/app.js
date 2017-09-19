@@ -1,0 +1,1 @@
+console.log("FROM APP.JS");
