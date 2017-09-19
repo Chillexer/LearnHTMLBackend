@@ -7,4 +7,4 @@ function items(number) {
       console.log(faker.commerce.productName() + " - $" + faker.commerce.price());
   }
 }
-items(10);
+items(100000);
