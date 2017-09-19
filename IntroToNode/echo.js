@@ -3,4 +3,5 @@ function echo(name, number) {
     console.log(name);
 }
 }
-echo("frederik", 10);
+echo("Echo!!!", 10);
+echo("Tater Tots", 3);
