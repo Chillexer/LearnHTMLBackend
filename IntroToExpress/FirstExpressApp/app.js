@@ -14,6 +14,11 @@ app.get("/dog", function(req, res){
     res.send("MEOW!");
 });
 
+app.get("/r/:subredditName/comments/:id/:title/", function(req, res){
+    console.log("Someone visited " + req.params.subredditName);
+    res.send("Welcome to Comments page");
+});
+
 app.get("*", function(req, res){
     console.log(req.headers['x-forwarded-for'] + " Made a Request");
     res.send("YOUR IP IS: " + req.headers['x-forwarded-for'] + " AND YOU ARE A STAR! ");
