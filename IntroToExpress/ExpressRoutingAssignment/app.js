@@ -22,12 +22,12 @@ app.get("/speak/:animal/", function(req, res){
 });
 
 app.get("/repeat/:data/:id/", function(req, res){
-    var speech = "";
+    var message = "";
     console.log(req.headers['x-forwarded-for'] + " Made a Request");
    for (var i = 0; i < req.params.id; i++) {
-       speech += req.params.data + " ";
+       message += req.params.data + " ";
    }
-    res.send(speech);
+    res.send(message);
 });
 
 app.get("*", function(req, res){
