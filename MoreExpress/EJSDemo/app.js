@@ -3,7 +3,10 @@ var app = express();
 
 app.use(express.static("public"));
 app.set("view engine", "ejs");
-
+if (/^win/.test(process.platform)) {
+    app.set('views', __dirname + '/views');
+    app.use(express.static(__dirname + '/public'));
+}
 app.get("/", function(req, res){
     res.render("home");
 });
