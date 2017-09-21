@@ -1,0 +1,13 @@
+<h1>Results Page!!!</h1>
+<a href="/">Search Again</a>
+<br>
+<ol>
+  <% parsedData["Search"].forEach(function(Data){ %>
+    <li>
+    <p><a href="<%= "https://www.google.dk/search?source=hp&q=" + Data["Title"] %>">
+    <strong><%= Data["Title"] %></strong></a> - <%= Data["Year"] %></p>
+    <% if ((Data["Poster"]) && (Data["Poster"] != "N/A")){ %>
+    <img src="<%= Data["Poster"] %>" alt="" style="width: 100px; height: 175px;">
+    </li>
+  <% }}); %>
+</ol>

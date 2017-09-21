@@ -1,23 +1,32 @@
 var express = require("express");
 var app = express();
+var bodyParser = require("body-parser")
+
+app.use(bodyParser.urlencoded({extended: true}));
+
+var friends = ["Tony", "Miranda", "Justin", "Pierre", "Lilu"];
 
 app.set("view engine", "ejs");
-
+if (/^win/.test(process.platform)) {
+    app.set('views', __dirname + '/views');
+    app.use(express.static(__dirname + '/public'));
+}
 
 app.get("/", function (req, res){
     res.render("home");
 });
 
 app.post("/addfriend", function(req,res){
-    res.send("TOU HAVE REACHED THE POST ROUTE!")
+    var newFriend = req.body.newfriend;
+    friends.push(newFriend);
+    res.redirect("/friends");
 })
 
 app.get("/friends", function (req, res){
-    var friends = ["Tony", "Miranda", "Justin", "Pierre", "Lilu"];
     res.render("friends", {friends: friends});
 });
 
 
-app.listen(process.env.PORT, process.env.IP, function() {
+app.listen(3000, function() {
     console.log("Server Started!!!");
 });
