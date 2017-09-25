@@ -27,6 +27,11 @@
     border-bottom-left-radius: 0;
   }
   .form-new #inputImage {
+    margin-bottom: 3px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .form-new #inputDescription {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -36,4 +41,8 @@
   }
   div form button{
     margin-bottom: 3%;
+  }
+
+  div p a {
+    margin: 20px 0;
   }
