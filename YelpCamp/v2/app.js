@@ -5,7 +5,7 @@ var express     = require("express"),
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect("mongodb://192.168.0.111:27017/yelp_camp", {useMongoClient: true});
+mongoose.connect("mongodb://192.168.0.100:27017/yelp_camp", {useMongoClient: true});
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
