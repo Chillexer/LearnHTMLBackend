@@ -3,24 +3,19 @@ var bodyParser  = require("body-parser"),
     express     = require("express"),
     request     = require('request'),
     app         = express(),
+    sizeOf      = require('image-size'),
     fs          = require("fs");
-    
+
+    var updated = false;
     
     var download = function(uri, filename, callback){
       request.head(uri, function(err, res, body){
-        console.log('content-type:', res.headers['content-type']);
-        console.log('content-length:', res.headers['content-length']);
-    
         request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
       });
     };
-    
-   // download('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Hej14aug2010.JPG/1200px-Hej14aug2010.JPG', __dirname + "/public/images/google.png", function(){
-   //   console.log('downloadet ' + req.body.blog.image);
-   // });
 
 // APP CONFIG    
-mongoose.connect("mongodb://192.168.0.100:27017/restful_blog_app", {useMongoClient: true});
+mongoose.connect("mongodb://192.168.1.21:27017/restful_blog_app", {useMongoClient: true});
 mongoose.Promise = global.Promise;
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -57,19 +52,48 @@ app.get("/blogs/new", function (req, res) {
 });
 
 app.post("/blogs", function (req, res) {
-    download(req.body.blog.image, "/public/images/" + "test.png", function(){
-        console.log('downloadet ' + req.body.blog.image);
-        req.body.blog.image = "/public/images/" + "test.png";
-        Blog.create(req.body.blog, function (err, newBlog) {
+    Blog.create(req.body.blog, function (err, newBlog) {
             if (err) {
                res.render("new");
             } else {
-               res.redirect("/blogs")
+                updated = false;
+                Blog.find({}, function (err,blog) {
+                    blog.forEach(function(body) {
+                        if(updated){
+                            return;
+                        }
+                        if(newBlog.image == body.source){
+                            
+                            Blog.update({_id: newBlog._id} , {$set: {image: "/images/" + body._id + ".png", source: newBlog.image}}, function () {
+                                console.log(body._id);
+                                console.log(body.source);
+                                console.log(body.image);
+                                updated = true;
+                            });
+                            updated = true;
+                        }
+                    })
+                    if (!updated) {
+                        download(req.body.blog.image, __dirname + "/public/images/" + newBlog._id + ".png", function(){
+                            var dimensions = sizeOf(__dirname + "/public/images/" + newBlog._id + ".png");
+                            
+                            var width = Number(dimensions.width);
+                            var height = Number(dimensions.height);
+                            if (width > 2000 || height > 2000) {
+                                res.redirect("/blogs");
+                            } else if(width < 2000 || height < 2000) {
+                                Blog.update({_id: newBlog._id} , {$set: {image: "/images/" + newBlog._id + ".png", source: newBlog.image}}, function(){
+                                res.redirect("/blogs");  
+                                });
+                            }                        
+                           });  
+                    }
+                    else{
+                            res.redirect("/blogs");
+                    }
+                });
            }
        }) 
-        }); 
-        
-   
 });
 
 app.get("/blogs/:id", function (req, res) {
