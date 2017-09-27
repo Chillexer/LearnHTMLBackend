@@ -16,6 +16,7 @@
     "http": "0.0.0",
     "image-size": "^0.6.1",
     "imagesize": "^1.0.0",
+    "method-override": "^2.3.9",
     "mongoose": "^4.11.13",
     "request": "^2.82.0",
     "request-image-size": "^2.0.0"
