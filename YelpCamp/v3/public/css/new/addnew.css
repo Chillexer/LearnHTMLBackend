@@ -1,0 +1,48 @@
+.form-new {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+  }
+  .form-new .form-new-heading,
+  .form-new .checkbox {
+    margin-bottom: 10px;
+  }
+  .form-new .checkbox {
+    font-weight: normal;
+  }
+  .form-new .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+  }
+  .form-new .form-control:focus {
+    z-index: 2;
+  }
+  .form-new #inputName {
+    margin-bottom: 3px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .form-new #inputImage {
+    margin-bottom: 3px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .form-new #inputDescription {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  h2{
+      text-align: center;
+  }
+  div form button{
+    margin-bottom: 3%;
+  }
+
+  div p a {
+    margin: 20px 0;
+  }

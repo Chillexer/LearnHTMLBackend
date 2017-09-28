@@ -1,4 +1,6 @@
 <% include ./partials/header %>
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=o54cags3br9gbwsw3rjtl3vwud8lspc9l9v8inpolz7weryg"></script>
+  <script>tinymce.init({ selector:'textarea' });</script>
 
 <div class="ui main text container segment">
     <div class="ui huge header">New Blog</div>
@@ -12,7 +14,6 @@
             <input type="text" name="blog[image]" placeholder="image">
         </div>
         <div class="field">
-            <label>Blog Content</label>
             <textarea name="blog[body]" placeholder="blog post goes here"></textarea>
         </div>
         <input class="ui violet big basic button" type="submit">
