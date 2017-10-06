@@ -1,0 +1,7 @@
+.img-fluid{
+    object-fit: cover; /* Do not scale the image */
+    object-position: bottom;
+    max-height: 200px;
+    min-height: 200px;
+    min-width: 100%;
+}
