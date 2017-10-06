@@ -47,14 +47,6 @@ router.post("/login", passport.authenticate("local",
 router.get("/logout", function (req, res) {
     req.logout();
     res.redirect("/campgrounds");
-})
-
-// middleware
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect("/login");
-}
+});
 
 module.exports = router;
