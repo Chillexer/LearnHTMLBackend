@@ -26,11 +26,11 @@ router.post("/", middleware.isLoggedIn,function (req, res) {
     var author = {
         id: req.user._id,
         username: req.user.username
-    }
+    };
     var desc = req.body.description;
     var newCampground = { name: name, image: image, description: desc, author: author};
 
-    Campground.create(newCampground, function (err, newluCreated) {
+    Campground.create(newCampground, function (err, newlyCreated) {
         if (err) {
             console.log(err);
         } else {
@@ -47,8 +47,9 @@ router.get("/new", middleware.isLoggedIn, function (req, res) {
 // show route
 router.get("/:id", function (req, res) {
     Campground.findById(req.params.id).populate("comments").exec(function (err, foundCampground) {
-        if (err) {
-            console.log(err);
+        if (err || !foundCampground) {
+            req.flash("error", "Campground not found");
+            res.redirect("back");
         } else {
             res.render("campgrounds/show", { campground: foundCampground });
         }
@@ -76,14 +77,14 @@ router.put("/:id", middleware.checkCampgroundOwnership, function (req, res) {
 router.delete("/:id", middleware.checkCampgroundOwnership, function (req, res) {
     Campground.findById(req.params.id, function (err, foundCampground) {
         if (err) {
-            res.redirect("back")
+            res.redirect("back");
         } else {
             foundCampground.comments.forEach(function (id) {
                 Comment.findByIdAndRemove(id, function (err) {
                     if (err) {
                         console.log(err);
                     }
-                })
+                });
             });
             Campground.findByIdAndRemove(req.params.id, function (err) {
                 if (err) {
@@ -91,7 +92,7 @@ router.delete("/:id", middleware.checkCampgroundOwnership, function (req, res) {
                 } else {
                     res.redirect("/campgrounds");
                 }
-            })
+            });
         }
     });
 });

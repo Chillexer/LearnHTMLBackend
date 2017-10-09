@@ -1,0 +1,76 @@
+<% include ../partials/header %>
+
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">YelpCamp</p>
+            <div class="list-group">
+                <li class="list-group-item active">Info 1</li>
+                <li class="list-group-item">Info 2</li>
+                <li class="list-group-item">Info 3</li>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="card mb-3 ">
+                <img class="card-img-top mb-1" src="<%= campground.image %>">
+                <div class="card-block m-2">
+                    <h4 class="card-title pull-right">DKK<%= campground.price %>/night</h4>
+                    <h4 class="card-title"><a href="#"><%=campground.name%></a></h4>
+                    <p class="card-text"><%= campground.description %></p>
+                    <p class="card-text mb-1"><em>Submitted By <%= campground.author.username%></em></p>
+                    <% if (currentUser && campground.author.id.equals(currentUser._id)){%>
+                    <button class="btn btn-light pull-right" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-cog fa-lg" aria-hidden="true"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                        <form style="cursor: -webkit-grab;" action="/campgrounds/<%= campground._id %>/edit" method="GET">
+                            <button class="dropdown-item" value="Edit"><i class="fa fa-pencil fa-fw"></i> Edit</button>
+                        </form>
+                        <form style="cursor: -webkit-grab;" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
+                            <button class="dropdown-item"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
+                        </form>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+            <div class="card pb-3">
+                <div class="text-right card-block mt-3 mb-2">
+                    <a class="btn btn-success mr-4" href="/campgrounds/<%=campground._id%>/comments/new">Leave a Review</a>
+                </div>  
+                <% campground.comments.forEach(function(comment, id){ %>
+                <% if(id === 0) { %>
+                <hr class="mx-3 mt-2 mb-3"> 
+                <% } %>
+                <div class="row mx-1">
+                    <div class="col-md-12">
+                        <strong><%= comment.author.username %></strong>
+                        <span class="pull-right">10 days ago</span>
+                        <div class="mb-2"><%= comment.text %>
+                        <% if (currentUser && comment.author.id.equals(currentUser._id)){%>
+                        <div class="btn-group pull-right">
+                        <button class="btn btn-light btn-sm mt-2 mb-1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-cog fa-lg" aria-hidden="true"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                        <form style="cursor: -webkit-grab;" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" method="GET">
+                            <button class="dropdown-item" value="Edit"><i class="fa fa-pencil fa-fw"></i> Edit</button>
+                        </form>
+                        <form style="cursor: -webkit-grab;" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                            <button class="dropdown-item"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
+                        </form>
+                        </div>
+                        </div>
+                        <% } %>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<link rel="stylesheet" href="/css/show/style.css">
+<% include ../partials/footer %>

@@ -1,0 +1,20 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <h2 class="form-new-heading">Add New Comment to <%= campground.name %></h2>
+      <form class="form-new" action="/campgrounds/<%= campground._id %>/comments" method="POST">
+        <input type="text" id="inputName" class="form-control mb-2" name="comment[text]" placeholder="text" >
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit!</button>
+        <a  href="/campgrounds/<%= campground._id %>">Go back</a>
+      </form>
+    </div>
+    
+            
+   
+        
+    
+    </div>
+</div>
+      <link rel="stylesheet" href="/css/new/addnew.css">
+
+<% include ../partials/footer %>
